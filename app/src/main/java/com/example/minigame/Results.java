@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class Results extends AppCompatActivity {
     Intent gi = getIntent();
+
     int clickResult;
     int holdResult;
     int flag;
+
     TextView tv = findViewById(R.id.textView);
 
     @SuppressLint("SetTextI18n")
@@ -21,17 +24,37 @@ public class Results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
         clickResult = gi.getIntExtra("clickResult", 0);
         holdResult = gi.getIntExtra("holdResult", 0);
+
         if(clickResult > holdResult)
         {
             flag = 1;
         }
+
         else
         {
             flag = 2;
         }
+
         tv.setText("Player 1 is the clicking player while player 2 is the holding player\n" +
                 "Click Result was: " + clickResult + "\nHold Result was: " + holdResult +
                 "\nThe winner is: Player " + flag);
 
     }
+
+    public void returnToMain(View view) {
+        gi.putExtra("click", 0);
+        gi.putExtra("hold", 0);
+
+        setResult(RESULT_OK);
+        finish();
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        gi.putExtra("click", 0);
+//        gi.putExtra("hold", 0);
+//
+//        setResult(RESULT_OK);
+//        finish();
+//    }
 }
