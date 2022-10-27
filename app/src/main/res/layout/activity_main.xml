@@ -50,7 +50,7 @@
             android:layout_height="100dp"
             android:backgroundTint="#000000"
             android:text="Results"
-            android:onClick="Move"/>
+            android:onClick="pass2Res"/>
 
         <Space
             android:layout_width="match_parent"

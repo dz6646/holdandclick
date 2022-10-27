@@ -9,23 +9,28 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Results extends AppCompatActivity {
-    Intent gi = getIntent();
+    Intent gi;
 
     int clickResult;
     int holdResult;
     int flag;
 
-    TextView tv = findViewById(R.id.textView);
+    TextView tv ;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        gi = getIntent();
+        tv = findViewById(R.id.textView);
         clickResult = gi.getIntExtra("clickResult", 0);
         holdResult = gi.getIntExtra("holdResult", 0);
-
-        if(clickResult > holdResult)
+        if(clickResult == holdResult)
+        {
+            flag = 3;
+        }
+        else if(clickResult > holdResult)
         {
             flag = 1;
         }
@@ -34,27 +39,32 @@ public class Results extends AppCompatActivity {
         {
             flag = 2;
         }
-
-        tv.setText("Player 1 is the clicking player while player 2 is the holding player\n" +
-                "Click Result was: " + clickResult + "\nHold Result was: " + holdResult +
-                "\nThe winner is: Player " + flag);
-
+        if(flag != 3) {
+            tv.setText("Player 1 is the clicking player while player 2 is the holding player\n\n" +
+                    "**Player 1** Click Result was: " + clickResult + "\n**Player 2** Hold Result was: " + holdResult +
+                    "\nThe winner is: Player " + flag);
+        }
+        else
+        {
+            tv.setText("Player 1 is the clicking player while player 2 is the holding player\n\n" +
+                    "**Player 1** Click Result was: " + clickResult + "\n**Player 2** Hold Result was: " + holdResult +
+                    "\nIt ended with a tie !");
+        }
     }
 
     public void returnToMain(View view) {
         gi.putExtra("click", 0);
         gi.putExtra("hold", 0);
 
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, gi);
         finish();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        gi.putExtra("click", 0);
-//        gi.putExtra("hold", 0);
-//
-//        setResult(RESULT_OK);
-//        finish();
-//    }
+    public void onBackPressed() {
+        gi.putExtra("click", 0);
+        gi.putExtra("hold", 0);
+
+        setResult(RESULT_OK, gi);
+        finish();
+    }
 }

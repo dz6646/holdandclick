@@ -12,14 +12,14 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     Button hold, click;
     int clickCounter = 0;
     int holdCounter = 0;
-    Intent si = new Intent(this, Results.class);
+    Intent si;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        si = new Intent(this, Results.class);
         hold = findViewById(R.id.Hold);
         click = findViewById(R.id.Click);
 
@@ -35,20 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         hold.setOnLongClickListener(this);
     }
 
-
-
-    @Override
-    public boolean onLongClick(View view) {
-        holdCounter += 2;
-        return true;
-    }
-
-    public void Move(View view) {
-        si.putExtra("clickResult", clickCounter);
-        si.putExtra("holdResult", holdCounter);
-        startActivityForResult(si, 19);
-    }
-
     @Override
     public void onActivityResult(int source, int good, @Nullable Intent data_back) {
 
@@ -59,4 +45,17 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             holdCounter = data_back.getIntExtra("hold", 0);
         }
     }
+
+    @Override
+    public boolean onLongClick(View view) {
+        holdCounter += 2;
+        return false;
+    }
+
+    public void pass2Res(View view) {
+        si.putExtra("clickResult", clickCounter);
+        si.putExtra("holdResult", holdCounter);
+        startActivityForResult(si, 19);
+    }
+
 }
